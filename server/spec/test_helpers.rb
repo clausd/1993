@@ -1,5 +1,5 @@
 ENV['RACK_ENV'] = 'test'
-require '../stash'
+require './stash'
 require 'rspec'
 require 'rack/test'
 

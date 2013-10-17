@@ -1,4 +1,4 @@
-require './test_helpers'
+require './spec/test_helpers'
 
 describe "The Stash blob saving app" do
   
