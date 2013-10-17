@@ -1,9 +1,12 @@
 require 'sinatra'
 require "sinatra/multi_route"
 require 'data_mapper'
+require 'JSON'
 
 if settings.environment == :development
-  DataMapper.setup(:default, 'sqlite::memory:')
+  DataMapper.setup(:default, 'sqlite:' + File.dirname(File.expand_path(__FILE__)) + '.db')
+elsif settings.environment == :test
+  DataMapper.setup(:default, 'sqlite:' + File.dirname(File.expand_path(__FILE__)) + '.test.db')
 else
   DataMapper.setup(:default, 'YOUR_CONNECTION_STRING')
 end

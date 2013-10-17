@@ -5,3 +5,12 @@
       * What 'HTML' is here can be made more sophisticated, i.e. we could implement templates,
       or allow HTML to actually mean 'the DOM'
 * RPC is evil
+
+- the CRUD signature
+
+GET
+POST
+PUT
+DELETE
+
+
