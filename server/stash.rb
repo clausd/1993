@@ -2,6 +2,7 @@ require 'sinatra'
 require "sinatra/multi_route"
 require 'data_mapper'
 require 'JSON'
+require 'rack/cors'
 
 if settings.environment == :development
   DataMapper.setup(:default, 'sqlite:' + File.dirname(File.expand_path(__FILE__)) + '.db')
@@ -9,6 +10,13 @@ elsif settings.environment == :test
   DataMapper.setup(:default, 'sqlite:' + File.dirname(File.expand_path(__FILE__)) + '.test.db')
 else
   DataMapper.setup(:default, 'YOUR_CONNECTION_STRING')
+end
+
+use Rack::Cors do |config|
+  config.allow do |allow|
+    allow.origins '*'
+    allow.resource '*', :headers => :any, :methods => [:get, :post, :put, :options]
+  end
 end
 
 class Stash
@@ -24,6 +32,9 @@ set :public_folder, "public"
 set :static, true
 set :sessions, true
 set :session_secret, 'MYSESSIONSECRET'
+if settings.environment == :development
+  set :protection, :except => [:http_origin]
+end
 
 # upgrade the context through login, geo-loc, whatever is needed
 # use the context to generate 
@@ -42,8 +53,9 @@ get '/stash/*' do
 end
 
 route :put, :post, '/stash/*' do
-  s = Stash.first_or_create(:uri => params[:splat])
-  s.data = request.body
+  s = Stash.first_or_create(:uri => params[:splat][0])
+  request.body.rewind
+  s.data = request.body.read
   s.save
   return 200
 end
