@@ -14,7 +14,7 @@ end
 
 use Rack::Cors do |config|
   config.allow do |allow|
-    allow.origins '*'
+    allow.origins 'http://localhost'
     allow.resource '*', :headers => :any, :methods => [:get, :post, :put, :options]
   end
 end
