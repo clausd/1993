@@ -2,58 +2,13 @@
   <head>
     <title>1993 demo</title>
     <link id="stylesheet" rel="stylesheet" href="stylesheets/normalize.css" type="text/css" />    
-    <script src="//ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
-    <script src="javascripts/1993.js" type="text/javascript"></script>
-    <script type="text/javascript">
-      var context;
-      $(document).ready(function() {
-        $.get('http://localhost:9393/context/', function(data) {
-          context = JSON.parse(data);
-          $('#chat-log').load('http://localhost:9393/stash/whiteboard/' + context.client_ip);
-          $('#input').focus();
-        });
-      });
-      document.addEventListener('keydown', function (event) {
-        var esc = event.which == 27,
-            nl = event.which == 13,
-            el = event.target,
-            input = el.nodeName != 'INPUT' && el.nodeName != 'TEXTAREA',
-            data = {};
-
-        if (input) {
-          if (esc) {
-            // restore state
-            document.execCommand('undo');
-          } else if (nl) {
-            // save
-            $('#chat-log').html($('#chat-log').html() + "<p/>" + $(el).html());
-            $("#chat-log").animate({scrollTop:$("#chat-log")[0].scrollHeight}, 1000);            
-            $('#chat-log').save('http://localhost:9393/stash/whiteboard/' + context.client_ip);
-            $(el).html('');
-
-            event.preventDefault();
-          }
-        }
-      }, true);
-    </script>
     <style>
-      html {
-        position: relative;
-        min-height: 100%;
-      }
       body {
         margin: 0 0 30px;
         background-color:lightgrey;
         overflow:hidden;
         height:100%;
         padding-top: 5px;
-      }
-      #demo-app {
-        min-height:100%;
-        height: auto !important;
-        height: 100%;
-        background-color:white;
-        padding:5px 5px 0px 5px;
       }
       .main {
         width:800px;
@@ -64,37 +19,6 @@
       .main p {
         display: block;
       }
-      .main:after {
-        display:block;
-      }
-      #input, .main:after {
-        position:absolute;
-        bottom:0;
-        width:775px;
-        height: 30px;
-        border-style:dotted;
-        border-width: 2px;
-        margin-right: -4px;
-      }
-      [contenteditable]:after {
-        font-style: italic;
-        font-size: 12px;
-        font-family: sans-serif;
-        color: #ccc;
-        .text-stroke(0);
-      }
-      [contenteditable]:hover, [contenteditable]:focus {
-        background: #FFFFD3;
-      }
-      [contenteditable]:focus {
-        padding: 5px;
-      }
-      #chat-log {
-        background-color:white;
-        height:250px;
-        overflow-y:scroll
-      }
-      </style>
     </style>
   </head>
   <body>
@@ -109,14 +33,7 @@
       <p>
         <em>1993</em> wants you to think documents, think REST. Web apps should be <em>user editable documents</em>, loosely joined - and nothing else.
       </p>
-      <div id="demo-app">
-        <h2>Sample <em>1993</em> application</h2>
-        <p>Below is an "IP whiteboard" - a chat log shared with anyone you share an IP with. Implemented using 1993</p>
-        <div id="chat-log">
-        
-        </div>
-        <p id="input" contenteditable></p>
-      </div>
+      <p>You can find a collection of demos <a href="demos/">here</a></p>
     </div>
   </body>
 </html>
